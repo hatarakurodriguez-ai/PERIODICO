@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Periódico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav {
+            background: #444;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+
+        .main {
+            flex: 3;
+            margin-right: 20px;
+        }
+
+        .sidebar {
+            flex: 1;
+            background: #ddd;
+            padding: 10px;
+        }
+
+        .article {
+            background: white;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📰 Mi Periódico</h1>
+    <p>Noticias al instante</p>
+</header>
+
+<nav>
+    <a onclick="cargarNoticias('todas')">Inicio</a>
+    <a onclick="cargarNoticias('politica')">Política</a>
+    <a onclick="cargarNoticias('deportes')">Deportes</a>
+    <a onclick="cargarNoticias('tecnologia')">Tecnología</a>
+</nav>
+
+<div class="container">
+    <div class="main" id="contenedor-noticias">
+        <!-- Noticias se insertan aquí -->
+    </div>
+
+    <div class="sidebar">
+        <h3>🕒 Últimas noticias</h3>
+        <ul id="ultimas"></ul>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Mi Periódico</p>
+</footer>
+
+<script>
+    const noticias = [
+        { titulo: "Nueva ley aprobada", categoria: "politica", contenido: "El gobierno aprobó una nueva ley..." },
+        { titulo: "Equipo gana campeonato", categoria: "deportes", contenido: "Gran victoria en la final..." },
+        { titulo: "Avance en inteligencia artificial", categoria: "tecnologia", contenido: "Nueva IA sorprende al mundo..." },
+        { titulo: "Debate político nacional", categoria: "politica", contenido: "Se enfrentan candidatos..." }
+    ];
+
+    function cargarNoticias(categoria) {
+        const contenedor = document.getElementById("contenedor-noticias");
+        contenedor.innerHTML = "";
+
+        const filtradas = categoria === "todas"
+            ? noticias
+            : noticias.filter(n => n.categoria === categoria);
+
+        filtradas.forEach(noticia => {
+            const div = document.createElement("div");
+            div.className = "article";
+            div.innerHTML = `
+                <h2>${noticia.titulo}</h2>
+                <p>${noticia.contenido}</p>
+            `;
+            contenedor.appendChild(div);
+        });
+
+        cargarUltimas();
+    }
+
+    function cargarUltimas() {
+        const lista = document.getElementById("ultimas");
+        lista.innerHTML = "";
+
+        noticias.slice(0, 3).forEach(n => {
+            const li = document.createElement("li");
+            li.textContent = n.titulo;
+            lista.appendChild(li);
+        });
+    }
+
+    // Cargar noticias al iniciar
+    cargarNoticias('todas');
+</script>
+
+</body>
+</html>
